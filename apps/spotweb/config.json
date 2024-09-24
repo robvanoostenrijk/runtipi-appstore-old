@@ -1,0 +1,90 @@
+{
+    "$schema": "../schema.json",
+    "author": "Spotweb",
+    "available": true,
+    "categories": ["media", "utilities"],
+    "description": "Spotweb is a decentralized usenet community based on the Spotnet protocol.",
+    "exposable": true,
+    "form_fields": [
+        {
+            "label": "Database Engine",
+            "type": "text",
+            "required": true,
+            "options": [
+              {
+                "label": "MySQL / MariaDB",
+                "value": "pdo_mysql"
+              },
+              {
+                "label": "PostgreSQL",
+                "value": "pdo_pgsql"
+              },
+              {
+                "label": "SQLite",
+                "value": "pdo_sqlite"
+              }
+            ],
+            "env_variable": "SPOTWEB_DB_ENGINE"
+        },
+        {
+            "type": "text",
+            "label": "Database Host",
+            "max": 50,
+            "min": 3,
+            "required": false,
+            "env_variable": "SPOTWEB_DB_HOST"
+        },
+        {
+            "type": "number",
+            "label": "Database port",
+            "hint": "Default is 3306",
+            "min": 1,
+            "max": 65535,
+            "required": false,
+            "placeholder": "3306",
+            "env_variable": "SPOTWEB_DB_PORT"
+        },
+        {
+            "type": "text",
+            "label": "Database Name",
+            "max": 50,
+            "min": 3,
+            "required": true,
+            "env_variable": "SPOTWEB_DB_NAME"
+        },
+        {
+            "type": "text",
+            "label": "Database User",
+            "max": 50,
+            "min": 3,
+            "required": false,
+            "env_variable": "SPOTWEB_DB_USER"
+        },
+        {
+            "type": "password",
+            "label": "Database Password",
+            "max": 50,
+            "min": 3,
+            "required": false,
+            "env_variable": "SPOTWEB_DB_PASS"
+        },
+        {
+            "type": "text",
+            "label": "cron Interval",
+            "hint": "Default is */5 * * * *",
+            "max": 50,
+            "min": 10,
+            "required": false,
+            "placeholder": "*/5 * * * *",
+            "env_variable": "SPOTWEB_CRON_INTERVAL"
+        }
+    ],
+    "id": "spotweb",
+    "name": "Spotweb",
+    "port": 8231,
+    "short_desc": "Spotweb decentralized usenet community",
+    "source": "https://github.com/edv/docker-spotweb/",
+    "supported_architectures": ["amd64"],
+    "tipi_version": 11,
+    "version": "dbfe6c0"
+  }
