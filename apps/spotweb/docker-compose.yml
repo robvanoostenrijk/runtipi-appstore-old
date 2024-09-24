@@ -1,0 +1,49 @@
+version: "3.7"
+services:
+  spotweb:
+    image: erikdevries/spotweb:sha-dbfe6c0
+    container_name: spotweb
+    environment:
+      - CRON_INTERVAL=${SPOTWEB_CRON_INTERVAL}
+      - DB_ENGINE=${SPOTWEB_DB_ENGINE}
+      - DB_HOST=${SPOTWEB_DB_HOST}
+      - DB_NAME=${SPOTWEB_DB_NAME}
+      - DB_PASS=${SPOTWEB_DB_PASS}
+      - DB_PORT=${SPOTWEB_DB_PORT}
+      - DB_USER=${SPOTWEB_DB_USER}
+      - TZ=${TZ}
+    dns:
+      - ${DNS_IP}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${APP_DATA_DIR}/cache:/app/cache
+    ports:
+      - ${APP_PORT}:80
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    labels:
+      # Main
+      traefik.enable: true
+      traefik.http.middlewares.spotweb-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.spotweb.loadbalancer.server.port: 80
+      # Web
+      traefik.http.routers.spotweb-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.spotweb-insecure.entrypoints: web
+      traefik.http.routers.spotweb-insecure.service: spotweb
+      traefik.http.routers.spotweb-insecure.middlewares: spotweb-web-redirect
+      # Websecure
+      traefik.http.routers.spotweb.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.spotweb.entrypoints: websecure
+      traefik.http.routers.spotweb.service: spotweb
+      traefik.http.routers.spotweb.tls.certresolver: myresolver
+      # Local domain
+      traefik.http.routers.spotweb-local-insecure.rule: Host(`spotweb.${LOCAL_DOMAIN}`)
+      traefik.http.routers.spotweb-local-insecure.entrypoints: web
+      traefik.http.routers.spotweb-local-insecure.service: spotweb
+      traefik.http.routers.spotweb-local-insecure.middlewares: spotweb-web-redirect
+      # Local domain secure
+      traefik.http.routers.spotweb-local.rule: Host(`spotweb.${LOCAL_DOMAIN}`)
+      traefik.http.routers.spotweb-local.entrypoints: websecure
+      traefik.http.routers.spotweb-local.service: spotweb
+      traefik.http.routers.spotweb-local.tls: true
