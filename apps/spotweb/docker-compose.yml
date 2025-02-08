@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   spotweb:
-    image: erikdevries/spotweb:sha-2ffd438
+    image: erikdevries/spotweb:sha-1bf870d
     container_name: spotweb
     environment:
       - CRON_INTERVAL=${SPOTWEB_CRON_INTERVAL}
