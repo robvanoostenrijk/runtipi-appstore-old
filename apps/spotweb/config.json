@@ -85,6 +85,6 @@
     "short_desc": "Spotweb decentralized usenet community",
     "source": "https://github.com/edv/docker-spotweb/",
     "supported_architectures": ["amd64"],
-    "tipi_version": 11,
-    "version": "2ffd438"
+    "tipi_version": 12,
+    "version": "1bf870d"
   }
